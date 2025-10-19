@@ -158,6 +158,8 @@ int main() {
   在不改变block大小的前提下增加处理数据的数量。这里的layout只在N维度上为2，在M和K维度上为1，
   所以相当于在N维度上重复处理2个数，所以原本MMA类处理32x8x16的数据，经过ValLayoutMNK的调整之后，
   处理的数据量就变为了32x32x16
+  （注意：在cutlass3.4之后去掉了ValLayoutMNK这个传参，相关讨论见https://github.com/NVIDIA/cutlass/discussions/1345，
+    上面那个讨论粗略看了下，没看懂。。有需要的话后面再仔细看）
   */
   using MMA = decltype(make_tiled_mma(mma_atom{}, 
                       make_layout(Shape<_2, _2, _1>{}), 
